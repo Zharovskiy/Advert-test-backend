@@ -1,7 +1,6 @@
 const parseLocation = (location) => {
   const isString = typeof location === 'string';
   if (!isString) return undefined;
-
   return location;
 };
 
@@ -34,7 +33,7 @@ export const parseFilterParams = (query) => {
     TV,
     shower,
     toilet,
-    form,
+    formCamper,
   } = query;
 
   const parsedLocation = parseLocation(location);
@@ -44,7 +43,7 @@ export const parseFilterParams = (query) => {
   const parsedTV = parseDetails(TV);
   const parsedShower = parseDetails(shower);
   const parsedToilet = parseDetails(toilet);
-  const parsedForm = parseFormCamper(form);
+  const parsedForm = parseFormCamper(formCamper);
 
   return {
     location: parsedLocation,
