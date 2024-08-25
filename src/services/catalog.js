@@ -13,6 +13,7 @@ export const getCatalog = async ({ page = 1, perPage = 10, filter = {} }) => {
   //   if (filter.airConditioner) {
   //     camperQuery.where('airConditioner').in(filter.airConditioner);
   //   }
+
   if (filter.form) {
     camperQuery.where('form').in(filter.form);
   }
