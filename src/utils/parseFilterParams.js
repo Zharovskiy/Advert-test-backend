@@ -1,27 +1,19 @@
+const isValidString = (str) => typeof str === 'string' && str.trim() !== '';
+
 const parseLocation = (location) => {
-  const isString = typeof location === 'string';
-  if (!isString) return undefined;
-  return location;
+  return isValidString(location) ? location : undefined;
 };
 
-const parseDetails = (detail) => {
-  const isString = typeof detail === 'string';
-  if (!isString) return undefined;
-
-  const validIsDetail = ['true', 'false'];
-  if (!validIsDetail.includes(detail)) return undefined;
-
-  return detail;
+const parseBooleanString = (detail) => {
+  if (!isValidString(detail)) return undefined;
+  return ['true', 'false'].includes(detail) ? detail === 'true' : undefined;
 };
 
 const parseFormCamper = (type) => {
-  const isString = typeof type === 'string';
-  if (!isString) return undefined;
-
   const validFormCamper = ['alcove', 'fullyIntegrated', 'panelTruck'];
-  if (!validFormCamper.includes(type)) return undefined;
-
-  return type;
+  return isValidString(type) && validFormCamper.includes(type)
+    ? type
+    : undefined;
 };
 
 export const parseFilterParams = (query) => {
@@ -36,23 +28,14 @@ export const parseFilterParams = (query) => {
     formCamper,
   } = query;
 
-  const parsedLocation = parseLocation(location);
-  const parsedAirConditioner = parseDetails(airConditioner);
-  const parsedTransmission = parseDetails(transmission);
-  const parsedKitchen = parseDetails(kitchen);
-  const parsedTV = parseDetails(TV);
-  const parsedShower = parseDetails(shower);
-  const parsedToilet = parseDetails(toilet);
-  const parsedForm = parseFormCamper(formCamper);
-
   return {
-    location: parsedLocation,
-    airConditioner: parsedAirConditioner,
-    transmission: parsedTransmission,
-    kitchen: parsedKitchen,
-    TV: parsedTV,
-    shower: parsedShower,
-    toilet: parsedToilet,
-    form: parsedForm,
+    location: parseLocation(location),
+    airConditioner: parseBooleanString(airConditioner),
+    transmission: parseBooleanString(transmission),
+    kitchen: parseBooleanString(kitchen),
+    TV: parseBooleanString(TV),
+    shower: parseBooleanString(shower),
+    toilet: parseBooleanString(toilet),
+    form: parseFormCamper(formCamper),
   };
 };
