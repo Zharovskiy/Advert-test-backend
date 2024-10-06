@@ -58,7 +58,6 @@ export const getCatalog = async ({ page = 1, perPage = 10, filter = {} }) => {
     .countDocuments();
 
   const camper = await camperQuery.skip(skip).limit(limit).exec();
-  console.log('camper: ', camper);
 
   const paginationData = calculatePaginationData(camperCount, perPage, page);
 
