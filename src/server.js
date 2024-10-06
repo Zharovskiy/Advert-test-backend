@@ -18,7 +18,25 @@ export const setupServer = () => {
       limit: '100kb',
     }),
   );
-  app.use(cors());
+
+  const allowedOrigins = [
+    'http://localhost:3000',
+    'https://advert-test.vercel.app',
+  ];
+
+  app.use(
+    cors({
+      origin: (origin, callback) => {
+        if (!origin || allowedOrigins.includes(origin)) {
+          callback(null, true);
+        } else {
+          callback(new Error('Not allowed by CORS'));
+        }
+      },
+      optionsSuccessStatus: 200,
+      credentials: true,
+    }),
+  );
 
   app.use(
     pino({
